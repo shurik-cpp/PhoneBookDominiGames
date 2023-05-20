@@ -14,13 +14,13 @@ class PhoneBook {
 public:
     explicit PhoneBook() noexcept;
 
-    void AddPerson(const std::string& name, const int number);
+    void AddPerson(const std::string& name, const uint64_t number);
     std::vector<Person> GetPersonsByName(const std::string& name) const;
     void PrintAllItems() const;
     std::string GetFirstItem();
 
 private:
-    std::multimap<std::string, PhoneNumber> data;
+    std::vector<Person> data;
 };
 
 
