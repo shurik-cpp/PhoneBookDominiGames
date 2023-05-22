@@ -20,8 +20,7 @@ PhoneNumber::PhoneNumber(const std::string& number) {
 }
 
 std::string PhoneNumber::AsString() const {
-    //return GetFormatingNumber();
-    return country + region + number_part1 + number_part2 + number_part3;
+    return GetFormatingNumber();
 }
 
 uint64_t PhoneNumber::AsNumber() const {
@@ -66,6 +65,3 @@ void PhoneNumber::ParseNumber(const std::string& number) {
         country += number[0];
     }
 }
-
-
-

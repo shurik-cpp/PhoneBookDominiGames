@@ -3,6 +3,7 @@
 //
 
 #include <sstream>
+#include <exception>
 #include "PhoneBook.h"
 
 uint64_t RandomNumber(const uint64_t min, const uint64_t max) {
@@ -82,8 +83,8 @@ PhoneBook::PhoneBook() noexcept {
         size_t randomNameIndex = RandomNumber(0, names.size() - 1);
         data.emplace_back(
                 Person{
-                    names[randomNameIndex],
-                    RandomNumber(79000000000, 79999999999)
+                        names[randomNameIndex],
+                        RandomNumber(79000000000u, 79999999999u)
                 });
     }
 }
@@ -109,8 +110,16 @@ void PhoneBook::PrintAllItems() const {
     }
 }
 
-std::string PhoneBook::GetFirstItem() {
-    std::stringstream stream;
-    stream << data[0];
-    return stream.str();
+int PhoneBook::GetPersonsCount() {
+    return data.size();
+}
+
+Person PhoneBook::GetPersonById(const size_t id) const {
+    if (id > data.size() - 1 || data.empty()) {
+        std::stringstream stream;
+        stream << "Wrong index. Max index is: " << data.size() - 1;
+        throw std::runtime_error(stream.str());
+    }
+
+    return data[id];
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.phonebookdominigames.databinding.ActivityMainBinding;
 
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = binding.sampleText;
         tv.setText(stringFromJNI());
+        //RecyclerView personsList = binding.PersonsList;
+
     }
 
     /**

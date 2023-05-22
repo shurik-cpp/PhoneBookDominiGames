@@ -1,19 +1,28 @@
 #include <jni.h>
 #include <string>
+#include <sstream>
 #include "PhoneBook.h"
+#include "nlohmann/json.hpp"
+#include <jni.h>
 
-extern "C" JNIEXPORT jstring JNICALL
+using Json = nlohmann::json;
 
-//PhoneBook book;
 
+extern "C" JNIEXPORT jstring
 Java_com_example_phonebookdominigames_MainActivity_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
 
     PhoneBook book;
+    std::stringstream stream;
+    try {
+        auto persons = book.GetPersonsByName("А");
+        Json json = persons;
+        stream << json;
+    }
+    catch (std::exception& ex) {
+        stream << ex.what();
+    }
 
-//    std::string hello = "Hello, DominiGames, from C++";
-//    return env->NewStringUTF(hello.c_str());
-    std::string s = book.GetFirstItem();
-    return env->NewStringUTF(s.c_str());
+    return env->NewStringUTF(stream.str().c_str());
 }

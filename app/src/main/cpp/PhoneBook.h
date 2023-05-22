@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Person.h"
 
+
 class PhoneBook {
 public:
     explicit PhoneBook() noexcept;
@@ -17,7 +18,8 @@ public:
     void AddPerson(const std::string& name, const uint64_t number);
     std::vector<Person> GetPersonsByName(const std::string& name) const;
     void PrintAllItems() const;
-    std::string GetFirstItem();
+    int GetPersonsCount();
+    Person GetPersonById(const size_t id) const;
 
 private:
     std::vector<Person> data;

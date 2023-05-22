@@ -5,7 +5,6 @@
 #ifndef PHONEBOOKDOMINIGAMES_PHONENUMBER_H
 #define PHONEBOOKDOMINIGAMES_PHONENUMBER_H
 
-
 #include <iostream>
 
 class PhoneNumber {
@@ -27,6 +26,7 @@ private:
     std::string GetFormatingNumber() const;
 
     void ParseNumber(const std::string& number);
+
 };
 
 std::ostream& operator<<(std::ostream& ostream, const PhoneNumber& number);
