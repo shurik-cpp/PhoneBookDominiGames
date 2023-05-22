@@ -8,6 +8,15 @@
 using Json = nlohmann::json;
 
 extern "C" JNIEXPORT jstring
+Java_com_example_phonebookdominigames_MainActivity_GetPhoneBookDataFromJNI(
+        JNIEnv* env,
+        jobject /* this */) {
+
+    Json json = PhoneBook::GetInstance()->GetAllData();
+    return env->NewStringUTF(json.dump().c_str());
+}
+
+extern "C" JNIEXPORT jstring
 Java_com_example_phonebookdominigames_MainActivity_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
@@ -25,3 +34,4 @@ Java_com_example_phonebookdominigames_MainActivity_stringFromJNI(
 
     return env->NewStringUTF(stream.str().c_str());
 }
+

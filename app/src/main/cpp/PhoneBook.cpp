@@ -103,8 +103,6 @@ PhoneBook::PhoneBook() noexcept {
     }
 }
 
-
-
 void PhoneBook::AddPerson(const std::string& name, const uint64_t number) {
     data.emplace_back(Person{name, number});
 }
@@ -119,6 +117,11 @@ std::vector<Person> PhoneBook::GetPersonsByName(const std::string& name) const {
     }
     return result;
 }
+
+const std::vector<Person>& PhoneBook::GetAllData() const {
+    return this->data;
+}
+
 
 void PhoneBook::PrintAllItems() const {
     for (const auto& it : data) {
