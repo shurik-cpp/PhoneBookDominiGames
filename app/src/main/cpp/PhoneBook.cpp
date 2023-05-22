@@ -75,6 +75,20 @@ const std::vector<std::string> names = {
         "Фекла"
 };
 
+PhoneBook* PhoneBook::p_book = nullptr;
+
+PhoneBook* PhoneBook::GetInstance() {
+    if (!p_book)
+        p_book = new PhoneBook();
+    return p_book;
+}
+
+PhoneBook::~PhoneBook() {
+    if (p_book) {
+        delete p_book;
+        p_book = nullptr;
+    }
+}
 
 PhoneBook::PhoneBook() noexcept {
     // Минимальное количество записей - 20
@@ -88,6 +102,8 @@ PhoneBook::PhoneBook() noexcept {
                 });
     }
 }
+
+
 
 void PhoneBook::AddPerson(const std::string& name, const uint64_t number) {
     data.emplace_back(Person{name, number});

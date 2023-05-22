@@ -13,7 +13,7 @@
 
 class PhoneBook {
 public:
-    explicit PhoneBook() noexcept;
+    static PhoneBook* GetInstance();
 
     void AddPerson(const std::string& name, const uint64_t number);
     std::vector<Person> GetPersonsByName(const std::string& name) const;
@@ -22,6 +22,10 @@ public:
     Person GetPersonById(const size_t id) const;
 
 private:
+    static PhoneBook* p_book;
+    explicit PhoneBook() noexcept;
+    ~PhoneBook();
+
     std::vector<Person> data;
 };
 

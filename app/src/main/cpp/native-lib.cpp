@@ -7,16 +7,15 @@
 
 using Json = nlohmann::json;
 
-
 extern "C" JNIEXPORT jstring
 Java_com_example_phonebookdominigames_MainActivity_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
 
-    PhoneBook book;
+    auto book = PhoneBook::GetInstance();
     std::stringstream stream;
     try {
-        auto persons = book.GetPersonsByName("А");
+        auto persons = book->GetPersonsByName("А");
         Json json = persons;
         stream << json;
     }
