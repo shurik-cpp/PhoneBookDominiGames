@@ -11,5 +11,5 @@ std::ostream& operator<<(std::ostream& ostream, const Person& person) {
 
 using Json = nlohmann::json;
 void to_json(Json& j, const Person& p) {
-    j = Json{{"name", p.Name}, {"phone", p.Number.AsString()}};
+    j = Json{{"Name", p.Name}, {"Number", p.Number.AsString()}};
 }

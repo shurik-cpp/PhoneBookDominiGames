@@ -1,6 +1,7 @@
 package com.example.phonebookdominigames;
 
-import java.util.jar.Attributes;
+
+import androidx.annotation.NonNull;
 
 public class Person {
     Person(String name, String number) {
@@ -9,4 +10,9 @@ public class Person {
     }
     public String Name;
     public String Number;
+
+    @NonNull
+    public String toString() {
+        return Name + " " + Number;
+    }
 }

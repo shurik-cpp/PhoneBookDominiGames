@@ -2,14 +2,18 @@ package com.example.phonebookdominigames;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.phonebookdominigames.databinding.ActivityMainBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,23 +32,26 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-        ArrayList<Person> PhoneBookData = new ArrayList<Person>();
-        PhoneBookData.add(new Person("name", "number"));
-        PhoneBookData.add(new Person("name1", "number1"));
-        PhoneBookData.add(new Person("name2", "number2"));
-
-
-        ListView lv = binding.personsListView;
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, PhoneBookData);
-        lv.setAdapter(adapter);
-
+        List<Person> deserializedData = DeserializeJniData(GetPhoneBookDataFromJNI());
         TextView tv = binding.sampleText;
-        //tv.setText(GetPhoneBookDataFromJNI());
+        tv.setText("Найдено " + Integer.toString(deserializedData.size()) + " контактов.");
+
+        ShowContactsInListView(deserializedData);
 
     }
 
+    private List<Person> DeserializeJniData(String serializedData) {
+        Gson json = new Gson();
+        Type founderListType = new TypeToken<List<Person>>(){}.getType();
+        return json.fromJson(serializedData, founderListType);
+    }
+
+    void ShowContactsInListView(List<Person> data) {
+        ListView contactsListView = binding.contactsListView;
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1, data);
+        contactsListView.setAdapter(adapter);
+    }
     /**
      * A native method that is implemented by the 'phonebookdominigames' native library,
      * which is packaged with this application.
