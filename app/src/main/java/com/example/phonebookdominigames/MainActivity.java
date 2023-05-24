@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,11 +35,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         List<Person> deserializedData = DeserializeJniData(GetPhoneBookDataFromJNI());
-        TextView tv = binding.sampleText;
-        tv.setText("Найдено " + Integer.toString(deserializedData.size()) + " контактов.");
 
+        ShowFindedCount(deserializedData.size());
         ShowContactsInListView(deserializedData);
-
     }
 
     private List<Person> DeserializeJniData(String serializedData) {
@@ -46,16 +46,30 @@ public class MainActivity extends AppCompatActivity {
         return json.fromJson(serializedData, founderListType);
     }
 
-    void ShowContactsInListView(List<Person> data) {
+    private void ShowContactsInListView(List<Person> data) {
         ListView contactsListView = binding.contactsListView;
         ArrayAdapter<String> adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, data);
         contactsListView.setAdapter(adapter);
     }
+
+    private void ShowFindedCount(int count) {
+        TextView tv = binding.sampleText;
+        tv.setText("Найдено " + Integer.toString(count) + " контактов.");
+    }
+
+    public void FindContactOnClick(View view) {
+        EditText editText = binding.editTextFindContact;
+        String name = editText.getText().toString();
+        List<Person> deserializedData = DeserializeJniData(GetContactsByNameFromJNI(name));
+        ShowFindedCount(deserializedData.size());
+        ShowContactsInListView(deserializedData);
+    }
+
     /**
      * A native method that is implemented by the 'phonebookdominigames' native library,
      * which is packaged with this application.
      */
     public native String GetPhoneBookDataFromJNI();
-    public native String stringFromJNI();
+    public native String GetContactsByNameFromJNI(String name);
 }

@@ -17,21 +17,12 @@ Java_com_example_phonebookdominigames_MainActivity_GetPhoneBookDataFromJNI(
 }
 
 extern "C" JNIEXPORT jstring
-Java_com_example_phonebookdominigames_MainActivity_stringFromJNI(
+Java_com_example_phonebookdominigames_MainActivity_GetContactsByNameFromJNI(
         JNIEnv* env,
-        jobject /* this */) {
+        jobject,
+        jstring name) {
 
-    auto book = PhoneBook::GetInstance();
-    std::stringstream stream;
-    try {
-        auto persons = book->GetPersonsByName("А");
-        Json json = persons;
-        stream << json;
-    }
-    catch (std::exception& ex) {
-        stream << ex.what();
-    }
-
-    return env->NewStringUTF(stream.str().c_str());
+    std::string cppName(env->GetStringUTFChars(name, nullptr));
+    Json json = PhoneBook::GetInstance()->GetPersonsByName(cppName);
+    return env->NewStringUTF(json.dump().c_str());
 }
-
