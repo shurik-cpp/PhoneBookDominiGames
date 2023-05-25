@@ -3,6 +3,7 @@ package com.example.phonebookdominigames;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -73,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = binding.editTextFindContact;
         editText.setText("");
         ShowAllContacts();
+    }
+
+    public void ShowSysInfoOnClick(View v) {
+        Intent intent = new Intent(this, SysInfoActivity.class);
+        startActivity(intent);
     }
 
     /**
