@@ -25,6 +25,7 @@ add_library( # Sets the name of the library.
         PhoneNumber.cpp
         Person.cpp
         PhoneBook.cpp
+        StringConverter.cpp
         )
 
 # Searches for a specified prebuilt library and stores the path as a

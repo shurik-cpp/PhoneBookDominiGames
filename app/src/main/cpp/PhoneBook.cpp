@@ -4,7 +4,11 @@
 
 #include <sstream>
 #include <exception>
+#include <iostream>
+#include <string>
 #include "PhoneBook.h"
+#include "StringConverter.h"
+
 
 uint64_t RandomNumber(const uint64_t min, const uint64_t max) {
     static bool doOnce = true;
@@ -107,12 +111,19 @@ void PhoneBook::AddPerson(const std::string& name, const uint64_t number) {
     data.emplace_back(Person{name, number});
 }
 
+bool PhoneBook::IsFindedIgnoreCase(const std::string& str, const std::string& substr) const {
+    std::wstring wstr = StringConverter::UtfToWstring(str);
+    std::wstring wsubstr = StringConverter::UtfToWstring(substr);
+    StringConverter::CyrillicToLowerCase(wstr);
+    StringConverter::CyrillicToLowerCase(wsubstr);
+    return wstr.find(wsubstr) != std::wstring::npos;
+}
+
 std::vector<Person> PhoneBook::GetPersonsByName(const std::string& name) const {
     std::vector<Person> result;
     for (const auto& it : data) {
         // Ищем по части имени
-        size_t pos = it.Name.find(name);
-        if (pos != std::string::npos)
+        if (IsFindedIgnoreCase(it.Name, name))
             result.emplace_back(it);
     }
     return result;
@@ -121,7 +132,6 @@ std::vector<Person> PhoneBook::GetPersonsByName(const std::string& name) const {
 const std::vector<Person>& PhoneBook::GetAllData() const {
     return this->data;
 }
-
 
 void PhoneBook::PrintAllItems() const {
     for (const auto& it : data) {

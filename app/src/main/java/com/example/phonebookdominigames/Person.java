@@ -8,8 +8,8 @@ public class Person {
         Name = name;
         Number = number;
     }
-    public String Name;
-    public String Number;
+    private String Name;
+    private String Number;
 
     @NonNull
     public String toString() {

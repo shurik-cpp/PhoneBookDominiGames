@@ -48,7 +48,7 @@ std::string PhoneNumber::GetFormatingNumber() const {
 }
 
 void PhoneNumber::ParseNumber(const std::string& number) {
-    // TODO: Переделать!
+    // TODO: Переделать парсер номера!
     if (number.size() == 11) {
         for (int i = 0; i < 2; ++i) {
             number_part3 += number[number.size() - 2 + i];

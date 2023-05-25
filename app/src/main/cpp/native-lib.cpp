@@ -22,7 +22,11 @@ Java_com_example_phonebookdominigames_MainActivity_GetContactsByNameFromJNI(
         jobject,
         jstring name) {
 
-    std::string cppName(env->GetStringUTFChars(name, nullptr));
-    Json json = PhoneBook::GetInstance()->GetPersonsByName(cppName);
+    std::string utfName(env->GetStringUTFChars(name, nullptr));
+    Json json = PhoneBook::GetInstance()->GetPersonsByName(utfName);
+
+    const jchar* jCharPtr = env->GetStringChars(name, nullptr);
+    env->ReleaseStringChars(name, jCharPtr);
+
     return env->NewStringUTF(json.dump().c_str());
 }

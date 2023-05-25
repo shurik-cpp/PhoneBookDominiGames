@@ -26,6 +26,7 @@ private:
     static PhoneBook* p_book;
     explicit PhoneBook() noexcept;
     ~PhoneBook();
+    bool IsFindedIgnoreCase(const std::string& str, const std::string& substr) const;
 
     std::vector<Person> data;
 };
