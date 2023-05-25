@@ -34,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        List<Person> deserializedData = DeserializeJniData(GetPhoneBookDataFromJNI());
+        ShowAllContacts();
+    }
 
+    private void ShowAllContacts() {
+        List<Person> deserializedData = DeserializeJniData(GetPhoneBookDataFromJNI());
         ShowFindedCount(deserializedData.size());
         ShowContactsInListView(deserializedData);
     }
@@ -64,6 +67,12 @@ public class MainActivity extends AppCompatActivity {
         List<Person> deserializedData = DeserializeJniData(GetContactsByNameFromJNI(name));
         ShowFindedCount(deserializedData.size());
         ShowContactsInListView(deserializedData);
+    }
+
+    public void ShowAllContactsOnClick(View view) {
+        EditText editText = binding.editTextFindContact;
+        editText.setText("");
+        ShowAllContacts();
     }
 
     /**
