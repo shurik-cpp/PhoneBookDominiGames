@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:text="Шурик" />
+            android:text="" />
 
         <TextView
             android:id="@+id/phone_number_text"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:text="+0(000)000-00-00" />
+            android:text="" />
 
         <Button
             android:id="@+id/CreateContactButton"

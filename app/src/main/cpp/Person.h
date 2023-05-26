@@ -11,7 +11,8 @@
 
 struct Person {
 public:
-    Person(const std::string& name, const PhoneNumber& number) : Name(name), Number(number) {}
+    Person(const std::string& name, const PhoneNumber& number)
+        : Name(name), Number(number) {}
 
     std::string Name;
     PhoneNumber Number;

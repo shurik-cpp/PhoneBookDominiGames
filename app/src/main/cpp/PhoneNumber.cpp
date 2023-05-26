@@ -16,7 +16,7 @@ PhoneNumber::PhoneNumber(const uint64_t number) {
 }
 
 PhoneNumber::PhoneNumber(const std::string& number) {
-    // Отсеиваем не цифровые символы
+    // Отбрасываем не цифровые символы
     std::string num;
     for (const auto& it : number)
         if (it >= '0' && it <= '9')
@@ -41,39 +41,35 @@ uint64_t PhoneNumber::AsNumber() const {
 }
 
 std::string PhoneNumber::GetFormatingNumber() const {
+    // TODO: Убрать. Пусть разбирается вьюшка, в каком формате ей выводить номер телефона.
     std::stringstream stream;
-    if (!country.empty())
-        stream << '+' << country;
-    if (!region.empty())
-        stream << '(' << region << ')';
-    if (!number_part1.empty())
-        stream << number_part1;
-    if (!number_part2.empty())
-        stream << '-' << number_part2 << '-' ;
-
-    stream <<  number_part3;
+    int numberLength = country.size() + region.size() + number_part1.size() + number_part2.size() + number_part3.size();
+    if (numberLength == 11) {
+        if (!country.empty())
+            stream << '+' << country;
+        if (!region.empty())
+            stream << '(' << region << ')';
+        if (!number_part1.empty())
+            stream << number_part1;
+        if (!number_part2.empty())
+            stream << '-' << number_part2 << '-';
+        stream << number_part3;
+    }
+    else
+        stream << country << region << number_part1 << number_part1 << number_part2 << number_part3;
 
     return stream.str();
 }
 
 void PhoneNumber::ParseNumber(const std::string& number) {
-    // TODO: Переделать парсер номера!
+    // TODO: Убрать от сюда парсер. Хранить только uint64_t.
     if (number.size() == 11) {
-        for (int i = 0; i < 2; ++i) {
-            number_part3 += number[number.size() - 2 + i];
-        }
-        for (int i = 0; i < 2; ++i) {
-            number_part2 += number[number.size() - 4 + i];
-        }
-        for (int i = 0; i < 3; ++i) {
-            number_part1 += number[number.size() - 7 + i];
-        }
-        for (int i = 0; i < 3; ++i) {
-            region += number[number.size() - 10 + i];
-        }
-        country += number[0];
+        country = number.substr(0, 1);
+        region = number.substr(1, 3);
+        number_part1 = number.substr(4, 3);
+        number_part2 = number.substr(7, 2);
+        number_part3 = number.substr(9, 2);
     }
-    else {
+    else
         number_part3 = number;
-    }
 }
