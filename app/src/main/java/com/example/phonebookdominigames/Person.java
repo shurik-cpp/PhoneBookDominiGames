@@ -11,6 +11,13 @@ public class Person {
     private String Name;
     private String Number;
 
+    public String GetName() {
+        return new String(Name);
+    }
+    public String GetNumber() {
+        return new String(Number);
+    }
+
     @NonNull
     public String toString() {
         return Name + " " + Number;

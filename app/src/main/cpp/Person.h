@@ -28,6 +28,5 @@ std::ostream& operator<<(std::ostream& ostream, const Person& person);
 
 void to_json(nlohmann::json& j, const Person& p);
 
-
 #endif //PHONEBOOKDOMINIGAMES_PERSON_H
 

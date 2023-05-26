@@ -152,3 +152,7 @@ Person PhoneBook::GetPersonById(const size_t id) const {
 
     return data[id];
 }
+
+void PhoneBook::AddPerson(const Person &person) {
+    data.emplace_back(person);
+}

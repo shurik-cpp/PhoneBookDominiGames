@@ -16,7 +16,12 @@ PhoneNumber::PhoneNumber(const uint64_t number) {
 }
 
 PhoneNumber::PhoneNumber(const std::string& number) {
-    ParseNumber(number);
+    // Отсеиваем не цифровые символы
+    std::string num;
+    for (const auto& it : number)
+        if (it >= '0' && it <= '9')
+            num += it;
+    ParseNumber(num);
 }
 
 std::string PhoneNumber::AsString() const {
@@ -41,8 +46,12 @@ std::string PhoneNumber::GetFormatingNumber() const {
         stream << '+' << country;
     if (!region.empty())
         stream << '(' << region << ')';
+    if (!number_part1.empty())
+        stream << number_part1;
+    if (!number_part2.empty())
+        stream << '-' << number_part2 << '-' ;
 
-    stream << number_part1 << '-' << number_part2 << '-' << number_part3;
+    stream <<  number_part3;
 
     return stream.str();
 }
@@ -63,5 +72,8 @@ void PhoneNumber::ParseNumber(const std::string& number) {
             region += number[number.size() - 10 + i];
         }
         country += number[0];
+    }
+    else {
+        number_part3 = number;
     }
 }

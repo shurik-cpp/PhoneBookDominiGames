@@ -16,6 +16,7 @@ public:
     static PhoneBook* GetInstance();
 
     void AddPerson(const std::string& name, const uint64_t number);
+    void AddPerson(const Person& person);
     std::vector<Person> GetPersonsByName(const std::string& name) const;
     const std::vector<Person>& GetAllData() const;
     void PrintAllItems() const;

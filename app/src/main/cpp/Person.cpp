@@ -9,7 +9,6 @@ std::ostream& operator<<(std::ostream& ostream, const Person& person) {
     return ostream;
 }
 
-using Json = nlohmann::json;
-void to_json(Json& j, const Person& p) {
-    j = Json{{"Name", p.Name}, {"Number", p.Number.AsString()}};
+void to_json(nlohmann::json& j, const Person& p) {
+    j = nlohmann::json{{"Name", p.Name}, {"Number", p.Number.AsString()}};
 }

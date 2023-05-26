@@ -76,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
         ShowAllContacts();
     }
 
+    public void NewContactDialogOnClick(View view) {
+        Intent intent = new Intent(this, AddNewContactActivity.class);
+        startActivity(intent);
+    }
+
     public void ShowSysInfoOnClick(View v) {
         Intent intent = new Intent(this, SysInfoActivity.class);
         startActivity(intent);
