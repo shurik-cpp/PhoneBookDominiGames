@@ -115,10 +115,11 @@ bool PhoneBook::IsFindedIgnoreCase(std::string str, std::string substr) const {
 
     {
         // TODO: Оптимизировать для латинских символов
-        transform(str.begin(), str.end(), str.begin(), towlower);
-        transform(substr.begin(), substr.end(), substr.begin(), towlower);
+//        transform(str.begin(), str.end(), str.begin(), ::towlower);
+//        transform(substr.begin(), substr.end(), substr.begin(), ::towlower);
     }
 
+    // FIXME: Падает на физическом устройстве! (wstring_convert: from_bytes error 0) после transform()
     std::wstring wstr = StringConverter::UtfToWstring(str);
     std::wstring wsubstr = StringConverter::UtfToWstring(substr);
     StringConverter::CyrillicToLowerCase(wstr);
@@ -130,8 +131,15 @@ std::vector<Person> PhoneBook::GetPersonsByName(const std::string& name) const {
     std::vector<Person> result;
     for (const auto& it : data) {
         // Ищем по части имени
-        if (IsFindedIgnoreCase(it.Name, name))
-            result.emplace_back(it);
+        try {
+            if (IsFindedIgnoreCase(it.Name, name))
+                result.emplace_back(it);
+        }
+        catch (std::exception& ex) {
+            Person p{ex.what(), 00000000000u};
+            result.emplace_back(p);
+            return result;
+        }
     }
     return result;
 }
