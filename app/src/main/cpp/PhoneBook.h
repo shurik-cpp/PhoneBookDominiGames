@@ -14,6 +14,9 @@
 class PhoneBook {
 public:
     static PhoneBook* GetInstance();
+    
+    PhoneBook(const PhoneBook& other) = delete;
+    PhoneBook& operator=(const PhoneBook& other) = delete;
 
     void AddPerson(const std::string& name, const uint64_t number);
     void AddPerson(const Person& person);
