@@ -3,7 +3,7 @@
 //
 
 #include "PhoneNumber.h"
-
+#include <regex>
 #include <sstream>
 
 std::ostream& operator<<(std::ostream& ostream, const PhoneNumber& number) {
@@ -17,10 +17,8 @@ PhoneNumber::PhoneNumber(const uint64_t number) {
 
 PhoneNumber::PhoneNumber(const std::string& number) {
     // Отбрасываем не цифровые символы
-    std::string num;
-    for (const auto& it : number)
-        if (it >= '0' && it <= '9')
-            num += it;
+    std::regex digits_regex("[^0-9]");
+    std::string num = std::regex_replace(number, digits_regex, "");
     ParseNumber(num);
 }
 
